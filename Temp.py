@@ -20,7 +20,6 @@ K = 20
 Bases = 'ACGT'
 """For RNA"""
 
-
 # Bases = 'ACGU'
 
 
@@ -144,8 +143,8 @@ for index, item in enumerate(One_edit_seq):
 """COMPUTING THE MELTING TEMPERATURE"""
 MELTING_TEMP = {}
 MELTING_TEMP_2MISS = {}
-MELTING_TEMP[Target] = MT.Tm_NN(seq=Probe, c_seq=Target, nn_table=MT.DNA_NN4, dnac1=250, dnac2=250,
-                                Mg=1)
+MELTING_TEMP[Target] = MT.Tm_NN(seq=Probe, c_seq=Target, nn_table=MT.DNA_NN4, dnac1=100000, dnac2=100000,
+                                Mg=1, Tris=1, Na=0, K=50)
 for one_seq in One_edit_seq:
     MELTING_TEMP[one_seq] = MT.Tm_NN(seq=Probe, c_seq=one_seq, nn_table=MT.DNA_NN4, dnac1=250, dnac2=250,
                                      Mg=1)
@@ -153,8 +152,8 @@ for one_seq in One_edit_seq:
 for two_seq_list in Two_edit_seq:
     for two_seq in two_seq_list:
         try:
-            MELTING_TEMP_2MISS[two_seq] = MT.Tm_NN(seq=Probe, c_seq=two_seq, nn_table=MT.DNA_NN4, dnac1=250, dnac2=250,
-                                                   Mg=1)
+            MELTING_TEMP_2MISS[two_seq] = MT.Tm_NN(seq=Probe, c_seq=two_seq, nn_table=MT.DNA_NN4, dnac1=100000,
+                                                   dnac2=100000, Mg=1, Tris=1, Na=0, K=50)
 
         except:
             MELTING_TEMP_2MISS[two_seq] = None
@@ -163,28 +162,28 @@ for two_seq_list in Two_edit_seq:
 df = pd.DataFrame(data=MELTING_TEMP, index=[0])
 df = df.T
 df = df.set_axis(["Melting Point"], axis=1)
-df.to_excel("E:/EDU/Research/Coding/Melting point result/Data from Python/One_Miss.xlsx")
+df.to_excel("~/EDU/Research/Coding/Melting point result/Winter 22/One_Miss.xlsx")
 df = pd.DataFrame(data=MELTING_TEMP_2MISS, index=[0])
 df = df.T
 df = df.set_axis(["Melting Point"], axis=1)
-df.to_excel("E:/EDU/Research/Coding/Melting point result/Data from Python/Two_Miss.xlsx")
+df.to_excel("~/EDU/Research/Coding/Melting point result/Winter 22/Two_Miss.xlsx")
 ##
-# Test here!
-print('%f' % MT.Tm_NN('CCGGCGCATACGTCTCGGT', c_seq='GGCCGCGTATGCAGAGCCA', nn_table=MT.DNA_NN4, dnac1=250,
-                      dnac2=250, Mg=1, saltcorr=1))
+# # Test here!
+# print('%f' % MT.Tm_NN('CCGGCGCATACGTCTCGGT', c_seq='GGCCGCGTATGCAGAGCCA', nn_table=MT.DNA_NN4, dnac1=250,
+#                       dnac2=250, Mg=1, saltcorr=1))
 
 ##
 # Let's make one list of all!
-temp_dict = {Target: MT.Tm_NN(seq=Probe, c_seq=Target, nn_table=MT.DNA_NN4, dnac1=250, dnac2=250,
-                              Mg=1)}
+temp_dict = {Target: MT.Tm_NN(seq=Probe, c_seq=Target, nn_table=MT.DNA_NN4, dnac1=100000,
+                              dnac2=100000, Mg=1, Tris=1, Na=0, K=50)}
 for one_seq in One_edit_seq:
-    temp_dict[one_seq] = MT.Tm_NN(seq=Probe, c_seq=one_seq, nn_table=MT.DNA_NN4, dnac1=250, dnac2=250,
-                                  Mg=1)
+    temp_dict[one_seq] = MT.Tm_NN(seq=Probe, c_seq=one_seq, nn_table=MT.DNA_NN4, dnac1=100000,
+                                  dnac2=100000, Mg=1, Tris=1, Na=0, K=50)
 for two_seq_list in Two_edit_seq:
     for two_seq in two_seq_list:
         try:
-            temp_dict[two_seq] = MT.Tm_NN(seq=Probe, c_seq=two_seq, nn_table=MT.DNA_NN4, dnac1=250, dnac2=250,
-                                          Mg=1)
+            temp_dict[two_seq] = MT.Tm_NN(seq=Probe, c_seq=two_seq, nn_table=MT.DNA_NN4, dnac1=100000,
+                                          dnac2=100000, Mg=1, Tris=1, Na=0, K=50)
 
         except:
             temp_dict[two_seq] = None
@@ -197,12 +196,12 @@ for list_item in temp_3miss:
     for item in list_item:
         if item not in temp_dict:
             try:
-                temp_dict[item] = MT.Tm_NN(seq=Probe, c_seq=item, nn_table=MT.DNA_NN4, dnac1=250, dnac2=250,
-                                           Mg=1)
+                temp_dict[item] = MT.Tm_NN(seq=Probe, c_seq=item, nn_table=MT.DNA_NN4, dnac1=100000,
+                                           dnac2=100000, Mg=1, Tris=1, Na=0, K=50)
             except:
                 temp_dict[item] = None
 ##
 df = pd.DataFrame(data=temp_dict, index=[0])
 df = df.T
 df = df.set_axis(["Melting Point"], axis=1)
-df.to_excel("E:/EDU/Research/Coding/Melting point result/Data from Python/MeltingPoint.xlsx")
+df.to_excel("~/EDU/Research/Coding/Melting point result/Winter 22/MeltingPoint.xlsx")
