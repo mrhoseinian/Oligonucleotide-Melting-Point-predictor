@@ -36,14 +36,16 @@ for i in range(1, Count, Copies):
     for j in plot_data.columns:
         curr_data = plot_data[j]
         derivative = -np.gradient(curr_data, 0.5)
-        # melting_points[Well_plate[curr_ax]] = melting_points.get(Well_plate[curr_ax], 0) + Temperature[np.argmax(derivative[20:])]
+        melting_points[Well_plate[curr_ax]] = melting_points.get(Well_plate[curr_ax], 0) + Temperature[20 + np.argmax(derivative[20:])]
         rfu = sns.lineplot(ax=axes[curr_ax, 0], y=curr_data, x=Temperature)
         der_rfu = sns.lineplot(ax=axes[curr_ax, 1], y=derivative, x=Temperature)
-        rfu.set(xlabel='Temperature')
-        rfu.set(ylabel=Well_plate[curr_ax])
-        der_rfu.set(xlabel='Temperature')
-    # der_rfu.set(ylabel=f"Melting Point = {melting_points[Well_plate[curr_ax]] / Copies}")
+    rfu.set(xlabel='Temperature')
+    rfu.set(ylabel=Well_plate[curr_ax])
+    der_rfu.set(xlabel='Temperature')
+    der_rfu.set(ylabel=f"Melting Point = {melting_points[Well_plate[curr_ax]] / Copies:.2f}")
     curr_ax += 1
 plt.show()
-# plt.savefig('./figures/result.png')
+plt.savefig('./figures/result.png')
+
 ##
+
