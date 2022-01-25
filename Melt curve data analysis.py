@@ -1,6 +1,6 @@
 ##
+import collections
 import string
-
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -30,22 +30,22 @@ number_of_plots = int(Count / Copies)
 ##
 fig, axes = plt.subplots(number_of_plots, 2, figsize=(15 * 2, 8 * number_of_plots))
 curr_ax = 0
-melting_points = {}
+melting_points = collections.defaultdict(list)
 for i in range(1, Count, Copies):
     plot_data = melting_data[melting_data.columns[i:i + Copies]]
     for j in plot_data.columns:
         curr_data = plot_data[j]
         derivative = -np.gradient(curr_data, 0.5)
-        melting_points[Well_plate[curr_ax]] = melting_points.get(Well_plate[curr_ax], 0) + Temperature[20 + np.argmax(derivative[20:])]
+        melting_points[Well_plate[curr_ax]].append(Temperature[20 + np.argmax(derivative[20:])])
         rfu = sns.lineplot(ax=axes[curr_ax, 0], y=curr_data, x=Temperature)
         der_rfu = sns.lineplot(ax=axes[curr_ax, 1], y=derivative, x=Temperature)
     rfu.set(xlabel='Temperature')
     rfu.set(ylabel=Well_plate[curr_ax])
     der_rfu.set(xlabel='Temperature')
-    der_rfu.set(ylabel=f"Melting Point = {melting_points[Well_plate[curr_ax]] / Copies:.2f}")
+    der_rfu.set(ylabel=f"Melting Point = {np.mean(melting_points[Well_plate[curr_ax]]):.2f} and std = {np.std(melting_points[Well_plate[curr_ax]]):.2f}")
     curr_ax += 1
-plt.show()
 plt.savefig('./figures/result.png')
+plt.show()
 
 ##
 
