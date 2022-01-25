@@ -11,7 +11,6 @@ import pandas as pd
 
 # import numpy as np
 
-# print('%0.2f' % mt.Tm_NN('CGUUGA', c_seq='GCAACU', nn_table=mt.RNA_NN3, dnac1=250, dnac2=250, Mg=1))
 ##
 # K = int(input("K=?"))
 K = 20
@@ -146,8 +145,8 @@ MELTING_TEMP_2MISS = {}
 MELTING_TEMP[Target] = MT.Tm_NN(seq=Probe, c_seq=Target, nn_table=MT.DNA_NN4, dnac1=100000, dnac2=100000,
                                 Mg=1, Tris=1, Na=0, K=50)
 for one_seq in One_edit_seq:
-    MELTING_TEMP[one_seq] = MT.Tm_NN(seq=Probe, c_seq=one_seq, nn_table=MT.DNA_NN4, dnac1=250, dnac2=250,
-                                     Mg=1)
+    MELTING_TEMP[one_seq] = MT.Tm_NN(seq=Probe, c_seq=one_seq, nn_table=MT.DNA_NN4, dnac1=100000, dnac2=100000,
+                                     Mg=1, Tris=1, Na=0, K=50)
 ##
 for two_seq_list in Two_edit_seq:
     for two_seq in two_seq_list:
@@ -205,3 +204,21 @@ df = pd.DataFrame(data=temp_dict, index=[0])
 df = df.T
 df = df.set_axis(["Melting Point"], axis=1)
 df.to_excel("~/EDU/Research/Coding/Melting point result/Winter 22/MeltingPoint.xlsx")
+
+## Four mismatches for one specific sequence: TTTGAAATTAGTGGCGAAAT
+Four_edit_seq = add_sequences('TTTGAAATTAGTGGCGAAAT')
+MELTING_TEMP_4MISS = {}
+for seq in Four_edit_seq:
+    try:
+        MELTING_TEMP_4MISS[seq] = MT.Tm_NN(seq=Probe, c_seq=seq, nn_table=MT.DNA_NN4, dnac1=100000,
+                                           dnac2=100000, Mg=1, Tris=1, Na=0, K=50)
+
+    except:
+        MELTING_TEMP_4MISS[seq] = None
+df = pd.DataFrame(data=MELTING_TEMP_4MISS, index=[0])
+df = df.T
+df = df.set_axis(["Melting Point"], axis=1)
+df.to_excel("~/EDU/Research/Coding/Melting point result/Winter 22/Four_Miss_for_one_sequence.xlsx")
+
+##
+
