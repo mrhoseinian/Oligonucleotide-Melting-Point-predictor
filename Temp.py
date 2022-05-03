@@ -166,10 +166,10 @@ df = pd.DataFrame(data=MELTING_TEMP_2MISS, index=[0])
 df = df.T
 df = df.set_axis(["Melting Point"], axis=1)
 df.to_excel("~/EDU/Research/Coding/Melting point result/Winter 22/Two_Miss.xlsx")
-##
+# ##
 # # Test here!
-# print('%f' % MT.Tm_NN('CCGGCGCATACGTCTCGGT', c_seq='GGCCGCGTATGCAGAGCCA', nn_table=MT.DNA_NN4, dnac1=250,
-#                       dnac2=250, Mg=1, saltcorr=1))
+# print('%f' % MT.Tm_NN(seq=Probe, c_seq='TGTGGAATTA', nn_table=MT.DNA_NN4, dnac1=100000,
+#                               dnac2=100000, Mg=1, Tris=1, Na=0, K=50))
 
 ##
 # Let's make one list of all!
