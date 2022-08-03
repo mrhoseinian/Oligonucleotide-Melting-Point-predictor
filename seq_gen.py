@@ -40,7 +40,7 @@ def generate_sequences(seq_length, format) :
         sequence = Seq(dna_string_convert(base4(i, seq_length))) ## Map integer to DNA sequence, construct Sequence Object
         
         if format == "CSV":
-            f.write('%s,%3.4f' %(sequence, MeltingTemp.Tm_NN(sequence))) ## Predict melting temp using nearest neighbor method, print sequence and temp in CSV format
+            f.write('%s,%3.4f\n' %(sequence, MeltingTemp.Tm_NN(seq=sequence, nn_table=MeltingTemp.DNA_NN4, dnac1=100000, dnac2=100000, Mg=1, Tris=1, Na=0, K=50))) ## Predict melting temp using nearest neighbor method, print sequence and temp in CSV format
         elif format == "FASTA":
             f.write('>Seq%s\n%s\n' %(i, sequence))
             if(i < pow(4,seq_length) - 1):
